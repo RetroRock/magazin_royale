@@ -1,0 +1,7 @@
+.vscode
+*.mp4
+.env
+*credentials*
+*secret*
+venv
+*.pickle

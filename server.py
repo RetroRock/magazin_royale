@@ -4,6 +4,7 @@ from flask import Flask, render_template, request
 import requests
 from dotenv import load_dotenv
 from webdav import Webdav
+from scheduler import Scheduler
 
 # This variable specifies the name of a file that contains the OAuth 2.0
 # information for this application, including its client_id and client_secret.
@@ -17,7 +18,7 @@ SCOPES = [
 API_SERVICE_NAME = "youtube"
 API_VERSION = "v3"
 
-webdav = None
+scheduler = Scheduler()
 
 app = Flask(__name__, template_folder="template")
 # Note: A secret key is included in the sample so that it works.
@@ -28,13 +29,13 @@ app.secret_key = os.getenv("APP_SECRET")
 
 @app.route("/")
 def index():
-    remote_file_name = "video.mp4"
-    local_file_name = "video.mp4"
-    webdav.schedule(
-        remote_file_name,
-        local_file_name,
-        lambda: print("Finished uploading " + local_file_name),
-    )
+    # remote_file_name = "video.mp4"
+    # local_file_name = "video.mp4"
+    # webdav.schedule(
+    # remote_file_name,
+    # local_file_name,
+    # lambda: print("Finished uploading " + local_file_name),
+    # )
 
     return render_template("index.html")
 
@@ -46,5 +47,5 @@ if __name__ == "__main__":
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
     # Specify a hostname and port that are set as a valid redirect URI
     # for your API project in the Google API Console.
-    webdav = Webdav()
+    # webdav = Webdav()
     app.run("localhost", 8080, debug=True)

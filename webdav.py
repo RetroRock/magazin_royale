@@ -8,11 +8,11 @@ from queue import Queue
 
 load_dotenv()
 
-WEBDAV_HOSTNAME = "https://space.rocket-fruit.com/remote.php/dav/files/Julius"
-WEBDAV_LOGIN = "Julius"
+WEBDAV_HOSTNAME = os.getenv("WEBDAV_HOSTNAME")
+WEBDAV_LOGIN = os.getenv("WEBDAV_LOGIN")
 WEBDAV_DEVICE_PASSWORD = os.getenv("WEBDAV_DEVICE_PASSWORD")
-WEBDAV_TIMEOUT = 3600
-WEBDAV_ROOT_DIR = "Familie/Medien/Serien/ZDF Magazin Royale"
+WEBDAV_TIMEOUT = os.getenv("WEBDAV_TIMEOUT")
+WEBDAV_ROOT_DIR = os.getenv("WEBDAV_ROOT_DIR")
 
 
 options = {

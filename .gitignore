@@ -5,3 +5,6 @@
 *secret*
 venv
 *.pickle
+webdav
+*pycache*
+*.json

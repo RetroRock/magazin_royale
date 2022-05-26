@@ -7,6 +7,7 @@ from queue import Queue
 
 from downloader import Downloader
 from webdav import Webdav
+from utils import log
 
 load_dotenv()
 
@@ -22,10 +23,11 @@ class Scheduler:
         self.videos = Queue()
         self.videos.put([])
         self.retrieve_saved_videos()
-        thread = Thread(target=self.run, args=(self.videos,))
+        thread = Thread(target=self.run, args=(self.videos,), daemon=True)
         thread.start()
 
     def retrieve_saved_videos(self):
+        log(f"Loading saved video list from {VIDEO_DB_PATH}...")
         if os.path.exists(VIDEO_DB_PATH):
             with open(VIDEO_DB_PATH, "r") as file:
                 self.videos.put(json.load(file))
@@ -36,16 +38,19 @@ class Scheduler:
 
     def run(self, known_videos_queue):
         while True:
+            log("Loading saved video list...")
             known_videos = known_videos_queue.get()
-            print("Request video list")
+            log("Requesting video list...")
             videos = self.downloader.get_video_list(VIDEOS_URL)
-            print("Checking for new videos")
+            log("Checking for new videos...")
             new_videos = [v for v in videos if v not in known_videos]
             if new_videos:
-                print("Queue videos for download")
+                log("Detected new videos")
+                print(f"Queue videos for download:\n{new_videos}")
                 self.downloader.queue_videos_for_download(new_videos)
-                print("Saving new videos to json file")
+                print(f"Saving new videos to {VIDEO_DB_PATH}")
                 self.save_videos(videos)
             known_videos_queue.put(videos)
 
+            log(f"Sleeping for {FETCH_VIDEOS_INTERVAL_SECONDS} seconds")
             sleep(FETCH_VIDEOS_INTERVAL_SECONDS)

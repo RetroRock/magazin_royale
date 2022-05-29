@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>FlaskTest</title>
-</head>
-<body>
-	<h2>Welcome To GFG</h2>
-	<h4>Flask: Rendering Templates</h4>
-<!-- this section can be replaced by a child document -->
-{% block body %}
-<p>This is a Flask application.</p>
-{% endblock %}
-</body>
+  <head>
+    <title>FlaskTest</title>
+    <style>
+      body {
+        background-color: #000;
+        color: #fff;
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Magazin Royale</h2>
+    <!-- this section can be replaced by a child document -->
+    {% block body %}
+    <a href="{{ webdav_shared_url }}">Link to videos</a>
+    <h3>Uploaded videos</h3>
+    <ul>
+      {% for file in uploaded_files %}
+      <li>{{file}}</li>
+      {% endfor %}
+    </ul>
+    {% endblock %}
+  </body>
 </html>

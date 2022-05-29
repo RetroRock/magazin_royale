@@ -1,0 +1,13 @@
+version: "3"
+services:
+  zdf_magazin_royale:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: "retrorock/zdf-magazin-royale:latest"
+    container_name: "zdf-magazin-royale"
+    env_file: ".env"
+    ports:
+      - 5000:5000
+    volumes:
+      - ./webdav:/app/webdav

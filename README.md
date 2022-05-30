@@ -10,7 +10,7 @@ Create automatic backups for your favorite shows using **[youtube-dl](https://yo
 
 Add a `.env` file to your working directory. You can find an example [here](https://github.com/RetroRock/magazin_royale/blob/master/.env.md)
 
-Run the container image:
+Run the [container image](https://hub.docker.com/repository/docker/retrorock/zdf-magazin-royale):
 
 ```
 docker pull retrorock/zdf-magazin-royale

@@ -1,4 +1,3 @@
-from dotenv import load_dotenv
 from queue import Queue
 from threading import Thread
 import json
@@ -10,7 +9,6 @@ from config import log, YDL_OPTS, SHOW_IDENTIFIER
 
 class Downloader:
     def __init__(self):
-        print("Downloader init")
         self._videos_to_download = Queue()
         thread = Thread(target=self.run, args=(self._videos_to_download,), daemon=True)
         thread.start()
@@ -44,7 +42,6 @@ class Downloader:
     def run(self, videos_to_download_queue):
         while True:
             videos_to_download = videos_to_download_queue.get()
-            print(videos_to_download)
             if len(videos_to_download) > 0:
                 log.info(f"Downloading {videos_to_download}...")
                 self.download_videos(videos_to_download, opts=YDL_OPTS)

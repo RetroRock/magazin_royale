@@ -17,9 +17,7 @@ from config import (
 
 class Webdav:
     def __init__(self):
-        print("Webdav init")
         self._client = Client(webdav_options)
-        # self._queue = Queue()
         self._thread = threading.Thread(target=self._run, daemon=True)
         self._thread.start()
 

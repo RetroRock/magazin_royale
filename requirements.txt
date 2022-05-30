@@ -1,4 +1,3 @@
 youtube_dl
 webdavclient3
 flask
-python-dotenv

@@ -11,3 +11,4 @@ services:
       - 5000:5000
     volumes:
       - ./webdav:/app/webdav
+    restart: unless-stopped

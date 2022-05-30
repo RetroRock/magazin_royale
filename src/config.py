@@ -1,8 +1,5 @@
 from os import getenv
-from dotenv import load_dotenv
 import logging
-
-load_dotenv()
 
 WEBDAV_TIMEOUT = int(getenv("WEBDAV_TIMEOUT")) or 3600
 DOWNLOAD_FOLDER = getenv("DOWNLOAD_FOLDER") or "webdav"

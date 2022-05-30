@@ -12,8 +12,6 @@ from config import FETCH_VIDEOS_INTERVAL_SECONDS, VIDEOS_URL
 
 class Scheduler:
     def __init__(self):
-
-        print("Scheduler init")
         self.webdav = Webdav()
         self.downloader = Downloader()
         self.videos = Queue()

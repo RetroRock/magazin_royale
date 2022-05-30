@@ -20,6 +20,6 @@ WORKDIR /app
 # 
 # USER magazin_royale
 
-ENTRYPOINT [ "python" ]
+ENTRYPOINT [ "python3" ]
 
 CMD [ "src/server.py"]

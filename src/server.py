@@ -23,11 +23,19 @@ app.secret_key = os.getenv("APP_SECRET")
 
 @app.route("/")
 def index():
-
     uploaded_files = scheduler.webdav.get_uploaded_files()
+    videos_to_upload = scheduler.webdav.watch_downloaded_files()
     return render_template(
-        "index.html", uploaded_files=uploaded_files, webdav_shared_url=WEBDAV_SHARED_URL
+        "index.html",
+        uploaded_files=uploaded_files,
+        videos_to_upload=videos_to_upload,
+        webdav_shared_url=WEBDAV_SHARED_URL,
     )
+
+
+@app.route("/upload_check", methods=["POST"])
+def upload_check():
+    return json.dumps(scheduler.webdav.watch_downloaded_files())
 
 
 if __name__ == "__main__":

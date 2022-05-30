@@ -46,7 +46,7 @@ class Webdav:
         # Remove file from local disk after it has been uploaded successfully
         return lambda: log.info(msg) and os.remove(local_file_path)
 
-    def _watch_downloaded_files(self):
+    def watch_downloaded_files(self):
         log.info("Checking downloaded files")
         # Only .mp4 files without .temp: ^((?!.temp).)*\.mp4
         downloaded_files = [
@@ -54,7 +54,8 @@ class Webdav:
             for p in Path(DOWNLOAD_FOLDER).glob(r"*.mp4")
             if ".temp" not in p.name
         ]
-        log.info("Checking Checking uploaded files")
+
+        log.info("Checking uploaded files")
         uploaded_files = self.get_uploaded_files()
 
         files_to_upload = [
@@ -65,9 +66,10 @@ class Webdav:
             for downloaded_file in downloaded_files
             if downloaded_file not in uploaded_files
         ]
+
         if len(files_to_upload) == 0:
             log.info("No changes detected")
-            return
+        return files_to_upload
 
         log.info("Uploading new files:")
         for file in files_to_upload:
@@ -91,6 +93,6 @@ class Webdav:
 
     def _run(self):
         while True:
-            self._watch_downloaded_files()
+            self.watch_downloaded_files()
             log.info(f"Sleeping for {WATCH_DOWNLOAD_FOLDER_SECONDS} seconds ...")
             time.sleep(WATCH_DOWNLOAD_FOLDER_SECONDS)

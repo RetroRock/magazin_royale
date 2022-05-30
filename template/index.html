@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FlaskTest</title>
+    <title>ZDF Magazin Royale</title>
     <style>
       body {
         background-color: #000;
@@ -9,17 +9,42 @@
         font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
           "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
       }
+      button {
+        cursor: pointer;
+      }
     </style>
+    <script defer>
+      async function uploadCheck() {
+        const videosToUploadReq = await fetch("/upload_check", {
+          method: "POST",
+        });
+        const videosToUpload = await videosToUploadReq.json();
+        const videosToUploadList = document.getElementById("videosToUpload");
+        videosToUploadList.innerHTML = "";
+        for (let video of videosToUpload) {
+          elem = document.createElement("li");
+          node = document.createTextNode(video.remote_file_name);
+          elem.appendChild(node);
+          videosToUploadList.appendChild(elem);
+        }
+      }
+    </script>
   </head>
   <body>
     <h2>Magazin Royale</h2>
-    <!-- this section can be replaced by a child document -->
     {% block body %}
     <a href="{{ webdav_shared_url }}">Link to videos</a>
     <h3>Uploaded videos</h3>
     <ul>
       {% for file in uploaded_files %}
       <li>{{file}}</li>
+      {% endfor %}
+    </ul>
+    <h3>Videos to upload</h3>
+    <button onclick="uploadCheck()">Check for videos to upload</button>
+    <ul id="videosToUpload">
+      {% for video in videos_to_upload %}
+      <li>{{video.remote_file_name}}</li>
       {% endfor %}
     </ul>
     {% endblock %}

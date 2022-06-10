@@ -69,7 +69,6 @@ class Webdav:
 
         if len(files_to_upload) == 0:
             log.info("No changes detected")
-        return files_to_upload
 
         log.info("Uploading new files:")
         for file in files_to_upload:
@@ -83,10 +82,13 @@ class Webdav:
                         file["local_file_path"], success_msg
                     ),
                 )
+
             except LocalResourceNotFound as e:
                 log.error(e)
             except ResponseErrorCode as e:
                 log.error(e)
+
+        return files_to_upload
 
     def _progress(current, total):
         log.info(f"Progress: {current / total}")
